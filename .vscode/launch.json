@@ -1,0 +1,35 @@
+  {
+      "version": "0.2.0",
+      "configurations": [
+        {
+          "name": "Debug Executable",
+          "type": "cppdbg",
+          "request": "launch",
+          "program": "/home/lvsolo/git/www/ev_sdk_demo4.0_pedestrian_intrusion_yolov5/test/build/test-ji-api",
+          "args": [
+              "-f", 
+              "1",
+              "-i",
+              "data/persons.jpg",
+              "-o",
+              "output.jpg",
+          ],
+          "stopAtEntry": false,
+          "cwd": "${workspaceFolder}",
+          "environment": [],
+          "externalConsole": true,
+          "linux": {
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb"
+          },
+          "setupCommands": [
+            {
+              "description": "Enable pretty-printing for gdb",
+              "text": "-enable-pretty-printing",
+              "ignoreFailures": true
+            }
+          ],
+          "preLaunchTask": "build" // 确保这与你的构建任务名称匹配
+        }
+      ]
+    }

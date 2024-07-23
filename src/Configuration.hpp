@@ -97,6 +97,7 @@ struct Configuration
                 val[i] = mJConfigValue[key][i].asString();
             }
         }
+    return true;
     }
     //解析bool类型配置的函数
     bool checkAndUpdateBool(const std::string& key, bool &val)

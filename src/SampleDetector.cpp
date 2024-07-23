@@ -53,6 +53,7 @@ void SampleDetector::loadOnnx(const std::string strModelName)
     network->destroy();
     config->destroy();
     builder->destroy();
+    fprintf(stderr, "load ONNX model");
 }
 
 void SampleDetector::loadTrt(const std::string strName)
@@ -70,6 +71,7 @@ void SampleDetector::loadTrt(const std::string strName)
     fin.close();
     m_CudaEngine = runtime->deserializeCudaEngine(cached_engine.data(), cached_engine.size(), nullptr);
     m_CudaContext = m_CudaEngine->createExecutionContext();
+    fprintf(stderr, "load TRT model");
     runtime->destroy();
 }
 
@@ -114,6 +116,7 @@ bool SampleDetector::Init(const std::string& strModelName, float thresh)
     m_ArraySize[m_iOutputIndex] = size *sizeof(float);
     cudaStreamCreate(&m_CudaStream);    
     m_bUninit = false;
+    return  true;
 }
 
 bool SampleDetector::UnInit()
@@ -136,6 +139,7 @@ bool SampleDetector::UnInit()
     m_CudaContext->destroy();
     m_CudaEngine->destroy();
     m_bUninit = true;
+    return true;
 }
 
 SampleDetector::~SampleDetector()
@@ -168,6 +172,8 @@ bool SampleDetector::ProcessImage(const cv::Mat& img, std::vector<BoxInfo>& DetO
     float scale = std::min(m_InputSize.width / (img.cols * 1.0), m_InputSize.height / (img.rows * 1.0));
     decode_outputs((float*)m_ArrayHostMemory[m_iOutputIndex], mThresh, DetObjs, scale, img.cols, img.rows);
     runNms(DetObjs, 0.45);
+    fprintf(stderr, "002\n");
+    return true;
 }
 
 void SampleDetector::runNms(std::vector<BoxInfo>& objects, float thresh) 

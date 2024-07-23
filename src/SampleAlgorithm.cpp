@@ -27,7 +27,7 @@ SampleAlgorithm::~SampleAlgorithm()
 STATUS SampleAlgorithm::Init()
 {
     // 从默认的配置文件读取相关配置参数
-    const char *configFile = "/usr/local/ev_sdk/config/algo_config.json";
+    const char *configFile = "/home/lvsolo/git/www/ev_sdk_demo4.0_pedestrian_intrusion_yolov5/config/algo_config.json";
     SDKLOG(INFO) << "Parsing configuration file: " << configFile;
     std::ifstream confIfs(configFile);
     if (confIfs.is_open())
@@ -42,7 +42,7 @@ STATUS SampleAlgorithm::Init()
         confIfs.close();
     }
     mDetector = std::make_shared<SampleDetector>();
-    mDetector->Init("/usr/local/ev_sdk/model/yolov5s.onnx", mConfig.algoConfig.thresh);
+    mDetector->Init("/home/lvsolo/git/www/ev_sdk_demo4.0_pedestrian_intrusion_yolov5/model/yolov5s.onnx", mConfig.algoConfig.thresh);
     return STATUS_SUCCESS;
 }
 
