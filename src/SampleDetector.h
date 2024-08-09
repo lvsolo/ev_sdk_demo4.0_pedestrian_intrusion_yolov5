@@ -63,7 +63,8 @@ class SampleDetector
     private:
         void loadOnnx(const std::string strName);
         void loadTrt(const std::string strName);        
-        void decode_outputs(float* prob, float thresh, std::vector<BoxInfo>& objects, float scale, const int img_w, const int img_h);
+        void decode_outputs(void* prob, float thresh, std::vector<BoxInfo>& objects, float scale, const int img_w, const int img_h);
+        // void decode_outputs(float* prob, float thresh, std::vector<BoxInfo>& objects, float scale, const int img_w, const int img_h);
         
     
     private:    
@@ -71,11 +72,12 @@ class SampleDetector
         nvinfer1::IRuntime *m_CudaRuntime;
         nvinfer1::IExecutionContext *m_CudaContext;
         cudaStream_t m_CudaStream;
-        void* m_ArrayDevMemory[2]{0};
-        void* m_ArrayHostMemory[2]{0};
-        int m_ArraySize[2]{0};
+        void* m_ArrayDevMemory[5]{0};
+        void* m_ArrayHostMemory[5]{0};
+        int m_ArraySize[5]{0};
         int m_iInputIndex;
-        int m_iOutputIndex;        
+        // int m_iOutputIndex;    
+        int out_size1, out_size2, out_size3, out_size4;    
         int m_iClassNums;
         int m_iBoxNums;
         cv::Size m_InputSize;

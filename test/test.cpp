@@ -141,14 +141,12 @@ bool test_for_ji_calc_image()
     algoInstance.FaceInit();
     LOG(INFO) << "params----" << strIn;
     int type = check_filetype(strIn);
-        fprintf(stderr, "000\n");
     if( strUpdateArgs.size() && algoInstance.SetConfig(EMPTY_EQ_NULL(strUpdateArgs)) == false)
     {
         LOG(ERROR) << "ji_update_config error";
         return false;
     }
     
-        fprintf(stderr, "000\n");
     auto pics = num_pictures(strIn); 
     if( pics.size() > 1 )
     {
@@ -161,9 +159,7 @@ bool test_for_ji_calc_image()
     }
     else if (type == 0)
     {
-        fprintf(stderr, "000\n");
         algoInstance.ProcessImage(strIn, EMPTY_EQ_NULL(strArgs), repeats);
-        fprintf(stderr, "000\n");
     }
     else if (type == 1)
     {
@@ -201,7 +197,6 @@ bool test_for_ji_calc_image()
             algoInstance.ProcessImage(filename, EMPTY_EQ_NULL(strArgs), repeats);
         }
     }
-        fprintf(stderr, "000\n");
     return true;
 }
 

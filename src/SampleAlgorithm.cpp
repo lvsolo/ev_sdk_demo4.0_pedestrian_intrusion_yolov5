@@ -27,7 +27,8 @@ SampleAlgorithm::~SampleAlgorithm()
 STATUS SampleAlgorithm::Init()
 {
     // 从默认的配置文件读取相关配置参数
-    const char *configFile = "/home/lvsolo/git/www/ev_sdk_demo4.0_pedestrian_intrusion_yolov5/config/algo_config.json";
+    //const char *configFile = "/home/lvsolo/git/www/ev_sdk_demo4.0_pedestrian_intrusion_yolov5/config/algo_config.json";
+    const char *configFile = "/home/lvsolo/git/www/ev_sdk_demo4.0_pedestrian_intrusion_yolov5/config/algo_config_yolov6.json";
     SDKLOG(INFO) << "Parsing configuration file: " << configFile;
     std::ifstream confIfs(configFile);
     if (confIfs.is_open())
@@ -42,7 +43,11 @@ STATUS SampleAlgorithm::Init()
         confIfs.close();
     }
     mDetector = std::make_shared<SampleDetector>();
-    mDetector->Init("/home/lvsolo/git/www/ev_sdk_demo4.0_pedestrian_intrusion_yolov5/model/yolov5s.onnx", mConfig.algoConfig.thresh);
+    // mDetector->Init("/home/lvsolo/git/www/ev_sdk_demo4.0_pedestrian_intrusion_yolov5/model/yolov5s.onnx", mConfig.algoConfig.thresh);
+    mDetector->Init("/home/lvsolo/Downloads/hard-hat-detection/codes/YOLOv6/runs/train/rect_train4/weights/best_ckpt_bs1.engine.trt", \
+    mConfig.algoConfig.thresh);
+    // mDetector->Init("/home/lvsolo/Downloads/hard-hat-detection/codes/YOLOv6/runs/train/rect_train4/weights/best_ckpt.onnx", \
+    // mConfig.algoConfig.thresh);
     return STATUS_SUCCESS;
 }
 
@@ -115,18 +120,18 @@ STATUS SampleAlgorithm::Process(const cv::Mat &inFrame, const char *args, JiEven
     cv::Mat img = inFrame.clone();
     mDetector->ProcessImage(img, detectedObjects, mConfig.algoConfig.thresh);    
     
-    //过滤出行人
-    for(auto iter = detectedObjects.begin(); iter != detectedObjects.end();)
-    {
-        if(iter->label ==0 )
-        {
-            iter++;
-        }
-        else
-        {
-            iter = detectedObjects.erase(iter);
-        }
-    }
+    // 过滤出行人
+    // for(auto iter = detectedObjects.begin(); iter != detectedObjects.end();)
+    // {
+        // if(iter->label ==0 )
+        // {
+            // iter++;
+        // }
+        // else
+        // {
+            // iter = detectedObjects.erase(iter);
+        // }
+    // }
     
     
     for (auto &obj : detectedObjects)
